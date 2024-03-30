@@ -1,0 +1,55 @@
+/* Estilos para InicioBanco.css */
+.inicio {
+    background-color: #99F2FF; /* Rosa pastel */
+    color: #99F2FF; /* Rosa claro para el texto */
+    padding: 20px;
+    text-align: center;
+    font-family: Helvetica;
+  }
+  
+  .inicio-banco-header {
+    padding: 20px;
+  }
+  
+  .inicio-banco-buttons {
+    margin-top: 20px;
+  }
+  
+  .btn-iniciar-sesion,
+  .btn-registrarse {
+    font-family: Helvetica;
+    background-color: #ff99cc; /* Rosa pastel más oscuro */
+    color: #fff;
+    border: none;
+    padding: 15px 0; /* Aumenta el padding vertical para hacer el botón más grande */
+    width: 100%; /* Aprovecha todo el ancho disponible */
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 96px; /* Aumenta el tamaño de la fuente para hacer el texto más grande */
+  }
+  
+  .btn-iniciar-sesion:hover,
+  .btn-registrarse:hover {
+    background-color: #ff66b2; /* Rosa más claro al pasar el mouse */
+  }
+  
+  .inicio-banco-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .info-item {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para los elementos de información */
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  }
+  
+  .info-item h2 {
+    color: #AA939F; /* Rosa claro para el título */
+  }

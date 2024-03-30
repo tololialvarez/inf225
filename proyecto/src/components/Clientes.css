@@ -1,0 +1,50 @@
+/* Estilos para la clase de contenedor principal */
+.App {
+  text-align: center;
+  margin: 20px;
+  font-family: Helvetica;
+}
+
+/* Estilo de fondo rosa pastel */
+.background-pink {
+  background: #99F2FF; /* Color rosa pastel */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  font-size: 1.2rem;
+  padding: 20px;
+}
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: white; /* Fondo blanco */
+}
+
+/* Estilos para filas y celdas */
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 2px solid rgb(255, 0, 0); /* Borde inferior rosa oscuro */
+}
+
+/* Estilos para la cabecera */
+th {
+  background-color: #ff092e; /* Fondo rosa claro */
+  color: #800080; /* Texto violeta */
+  font-weight: bold;
+}
+
+/* Estilos para las filas impares */
+tr:nth-child(odd) {
+  background-color: #e851c5; /* Fondo amarillo claro */
+}
+
+/* Clase de estilo Kawaii para celdas */
+.kawaii-cell {
+  font-size: 1.4rem; /* Texto más grande */
+  background-color: #a60d27; /* Fondo rosa pastel */
+  border-radius: 10px;
+  padding: 8px;
+}

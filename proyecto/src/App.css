@@ -1,0 +1,61 @@
+/* Estilo del componente Navbar */
+.App {
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.bg-body-tertiary {
+  background-color: #FF99CC; /* Color de fondo rosa */
+  border: 10px solid #FF99CC; /* Borde rosa */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 15px; /* Espaciado interior */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para los enlaces en la barra de navegación */
+.Nav.Link {
+  color: #FF66AA; /* Color de texto rosa claro */
+  font-weight: bold; /* Texto en negrita */
+  font-size: 16px; /* Tamaño de fuente */
+  text-transform: uppercase; /* Mayúsculas */
+  margin-right: 10px; /* Espacio entre enlaces */
+  transition: color 0.3s; /* Transición de color suave */
+  font-family: Helvetica;
+}
+
+.Nav.Link:hover {
+  color: #FF33AA; /* Cambiar color al pasar el mouse */
+}
+
+/* Estilo para el botón de Iniciar sesión */
+.NavDropdown {
+  color: #FF66AA; /* Color de texto rosa claro */
+  font-weight: bold; /* Texto en negrita */
+  font-size: 16px; /* Tamaño de fuente */
+  text-transform: uppercase; /* Mayúsculas */
+  margin-right: 10px; /* Espacio entre elementos del menú */
+  transition: color 0.3s; /* Transición de color suave */
+  font-family: Helvetica;
+}
+
+.NavDropdown:hover {
+  color: #FF33AA; /* Cambiar color al pasar el mouse */
+}
+
+/* Estilo para el campo de entrada en el formulario */
+.Form.Control {
+  background-color: #FFCCFF; /* Color de fondo rosa claro */
+  border: 2px solid #FF66AA; /* Borde rosa claro */
+  border-radius: 10px; /* Bordes redondeados */
+  color: #FF33AA; /* Color de texto rosa oscuro */
+  font-weight: bold; /* Texto en negrita */
+  font-size: 14px; /* Tamaño de fuente */
+  padding: 8px; /* Espaciado interior */
+  margin-right: 10px; /* Espacio entre elementos del formulario */
+  transition: border-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+.Form.Control:focus {
+  border-color: #FF99CC; /* Cambiar borde al enfocar */
+  color: #FF66AA; /* Cambiar color al enfocar */
+}
