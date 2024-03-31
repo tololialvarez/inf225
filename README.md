@@ -11,3 +11,6 @@ Este proyecto está basado en # INF236-2023-2-PAR200-GRUPO-18
 
 # Retrospectiva
 
+## Alphas del proyecto
+
+## Riesgos 
