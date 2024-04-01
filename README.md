@@ -13,22 +13,30 @@ Este proyecto está basado en # INF236-2023-2-PAR200-GRUPO-18
 
 ## Alphas del proyecto
 
-El Alpha "Opportunity" ha sido identificado como uno de los Alphas más cruciales para nuestro proyecto en su estado actual de "Viable". A continuación, se presentan las medidas concretas y operacionales que hemos planeado para progresar hacia el siguiente estado:
-![image](https://github.com/tololialvarez/inf225/assets/165517658/154251bf-74ef-44d7-ba30-60e6f40eb2e9)
+* Stakeholders (4/6): Cumplimos con los requisitos minimos del sistema, pero aun no está listo para poder ser desplegado, por lo cual, este aun no ha tenido un feedback.
 
-Prueba de Concepto y Prototipos:
-Crea un prototipo más avanzado o una prueba de concepto que demuestre la viabilidad técnica de la solución y cómo se operará de forma deseada.
+* Opportunity (4/6): Solucion aceptable, pero no teniamos las herramientas para producirla.
 
-Planificación:
-Desarrolla un plan que contemple las fases de crecimiento y escalabilidad de la solución a largo plazo.
+* Software System (3/6): El sistema fue testeado y con errores aceptables, pero sin documentacion, por lo que aun no está listo para su uso general.
 
-Análisis de la Competencia:
-Identifica y analiza a los competidores directos e indirectos, sus fortalezas y debilidades, y cómo tu solución se compara y se diferencia.
+* Work (4/6): Se realizaron las operaciones basicas de software, funcionales, pero aun no es posible preever los riesgos a futuro.
+
+* Way of working (3/6): El sistema no tiene soporte frecuentemente, ya que no todos los integrantes estaban interesados en su correcto funcionamiento.
+
+* Team (3/5): En este proyecto no hubo una participacion activa por parte de todos los integrantes, ya que no todos tenian en el mismo interes en este.
+
+* Requirements (3/6): Fue testeado, pero su solucion no fue llevada a cabo.
+
+Los Alphas elegidos por nuestro grupo identificados en nuestro proyecto:
+
+* Team: Consideramos como fundamental tener buena comunicacion y mismo enfoque entre los integrantes del proyecto para que este pueda funcionar. Para esto partiremos organizandonos y creando roles para cada integrante.
+
+* Software System: La seguridad del sistema es un criterio fundamental para llevar a cavo nuestro proyecto, ya que nos comprometemos a garantizar y mejorar la protección de los datos a medida que avanzamos en su desarrollo.
+
 
 ## Riesgos 
 
-
-⚠︎ Riesgo de Pérdida de Datos sin Sistema de Backup 
+⚠ Riesgo de Pérdida de Datos sin Sistema de Backup 
 
 -Descripción del Riesgo: En caso de un fallo del sistema o una situación inesperada, la falta de un sistema de backup podría resultar en una pérdida irreversible de datos críticos, lo que afectaría la operatividad y la confiabilidad de las operaciones de préstamo.
 
