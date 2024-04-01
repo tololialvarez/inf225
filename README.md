@@ -26,18 +26,32 @@ Identifica y analiza a los competidores directos e indirectos, sus fortalezas y 
 
 ## Riesgos 
 
-###Riesgo de Pérdida de Datos sin Sistema de Backup
+
+⚠︎ Riesgo de Pérdida de Datos sin Sistema de Backup 
+
 -Descripción del Riesgo: En caso de un fallo del sistema o una situación inesperada, la falta de un sistema de backup podría resultar en una pérdida irreversible de datos críticos, lo que afectaría la operatividad y la confiabilidad de las operaciones de préstamo.
+
 -Objetivo Afectado: Integridad y disponibilidad de la información de préstamos y simulaciones de crédito.
+
 -Impacto: Alto, ya que la pérdida de datos puede conllevar a una pérdida de confianza de los clientes y problemas legales o de cumplimiento.
+
 -Probabilidad de Ocurrencia: Media, considerando que cualquier sistema está sujeto a posibles fallos.
+
 -Medidas de Mitigación: Implementar un sistema de backup automatizado que realice copias de seguridad periódicas de los datos en un entorno seguro y aislado.
+
 -Estado del Riesgo: Activo y no mitigado hasta que se establezca y verifique el sistema de backup.
 
-###Riesgo de Cálculos Erróneos en Simulaciones de Préstamos
+
+⚠︎ Riesgo de Cálculos Erróneos en Simulaciones de Préstamos
+
 -Descripción del Riesgo: Dado que las simulaciones se realizan manualmente y dependen de indicadores económicos que fluctúan, hay un riesgo significativo de cálculos incorrectos que pueden llevar a ofrecer condiciones de préstamo inadecuadas.
+
 -Objetivo Afectado: Exactitud y confiabilidad en el procesamiento de las solicitudes de préstamos.
+
 -Impacto: Medio, puede resultar en ofertas de préstamos no competitivas o financieramente insostenibles.
+
 -Probabilidad de Ocurrencia: Alta, especialmente si no se cuenta con herramientas automatizadas y actualizadas.
+
 -Medidas de Mitigación: Desarrollar e integrar una herramienta que utilice la API de la Comisión del Mercado Financiero para obtener los indicadores económicos actualizados automáticamente.
+
 -Estado del Riesgo: Activo y no mitigado hasta que se implemente la integración con la API.
