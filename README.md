@@ -65,15 +65,12 @@ Los Alphas elegidos por nuestro grupo identificados en nuestro proyecto:
 
 -Estado del Riesgo: Activo y no mitigado hasta que se implemente la integración con la API.
 
-#Objetivos
+# Objetivos
 Formalizar funcionamiento dentro del mercado financiero.
-#Criterio de éxito 
+# Criterio de éxito 
 Lograr una interacción éxitosa con instituciones como SBIF, CMF, Superintendencia de Pensiones y el Banco Central. 
 
-
-
-
-#Actores relevantes
+# Actores relevantes
 -Gerente: se encarga del funcionamiento de la financiera.
 -Analista de datos: Genera informes que solicitan las entidades regulatorias. 
 -Supervisor de créditos: Valida la correcta ejecución de protocolos. 
