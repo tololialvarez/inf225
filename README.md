@@ -72,6 +72,9 @@ Lograr una interacción éxitosa con instituciones como SBIF, CMF, Superintenden
 
 # Actores relevantes
 -Gerente: se encarga del funcionamiento de la financiera.
+
 -Analista de datos: Genera informes que solicitan las entidades regulatorias. 
+
 -Supervisor de créditos: Valida la correcta ejecución de protocolos. 
+
 -Ejecutivo financiero: reporta y gestiona créditos con los clientes para la consolidación de información. 
