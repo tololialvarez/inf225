@@ -64,17 +64,3 @@ Los Alphas elegidos por nuestro grupo identificados en nuestro proyecto:
 -Medidas de Mitigación: Desarrollar e integrar una herramienta que utilice la API de la Comisión del Mercado Financiero para obtener los indicadores económicos actualizados automáticamente.
 
 -Estado del Riesgo: Activo y no mitigado hasta que se implemente la integración con la API.
-
-# Objetivos
-Formalizar funcionamiento dentro del mercado financiero.
-# Criterio de éxito 
-Lograr una interacción éxitosa con instituciones como SBIF, CMF, Superintendencia de Pensiones y el Banco Central. 
-
-# Actores relevantes
--Gerente: se encarga del funcionamiento de la financiera.
-
--Analista de datos: Genera informes que solicitan las entidades regulatorias. 
-
--Supervisor de créditos: Valida la correcta ejecución de protocolos. 
-
--Ejecutivo financiero: reporta y gestiona créditos con los clientes para la consolidación de información. 
