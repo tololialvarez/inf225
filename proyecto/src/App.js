@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Solicitudes from './components/Solicitudes';
 import Prestamos from './components/Prestamos';
+import QuotationsPage from './components/QuotationsPage';
 import { logout} from "./redux/actions/authActions"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Container, Nav, NavDropdown, Navbar, Form, InputGroup} from "react-bootstrap"
@@ -28,6 +29,7 @@ const App = () => {
     if (path === '/valoruf') return 'valoruf';
     if (path === '/solicitudes') return 'solicitudes';
     if (path === '/prestamos') return 'prestamos';
+    if (path.includes('/quotations')) return 'quotations'; 
 
     return 'login';
   }
@@ -57,6 +59,9 @@ const App = () => {
         return <Solicitudes />;
       case 'prestamos':
         return <Prestamos />;
+      case 'quotations':
+        const customerId = window.location.pathname.split('/')[2];  // assuming URL like /quotations/123
+        return <QuotationsPage customerId={customerId} />;
       default:
         return null;
     }
@@ -74,6 +79,7 @@ const App = () => {
               {isLogged && <Nav.Link onClick={() => handleLinkClick('clientes')}>Clientes</Nav.Link>}
               {isLogged && <Nav.Link onClick={() => handleLinkClick('prestamos')}>Ver Solicitudes</Nav.Link>}
               <Nav.Link onClick={() => handleLinkClick('valoruf')}>Valor UF</Nav.Link>
+              <Nav.Link onClick={() => handleLinkClick('quotations')}>Simulación</Nav.Link>
             </Nav>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleLinkClick('login')}>Login</NavDropdown.Item>
