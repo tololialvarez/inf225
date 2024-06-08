@@ -1,6 +1,10 @@
 # Información del proyecto
 Este proyecto está basado en # INF236-2023-2-PAR200-GRUPO-18
 
+# Video explicativo
+
+https://youtu.be/m0L1y5mL87A
+
 # Grupo 5
 -Integrantes Actuales: 
 
