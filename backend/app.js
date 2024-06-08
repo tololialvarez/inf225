@@ -14,7 +14,8 @@ const routerBack = require("./routes/routerBack")
 const routerUsers = require("./routes/routerUsers")
 const routerAuth = require("./routes/routerAuth")
 const routerPrestamos = require("./routes/routerPrestamos");
-
+const simulationRoutes = require('./routes/simulations');
+app.use('/api/simulations', simulationRoutes);
 // middleware
 const PORT = process.env.PORT || 3000;
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
