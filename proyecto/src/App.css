@@ -59,3 +59,8 @@
   border-color: #FF99CC; /* Cambiar borde al enfocar */
   color: #FF66AA; /* Cambiar color al enfocar */
 }
+
+.username-logged{
+  margin-top: 15px;
+  margin-left: 15px;
+}

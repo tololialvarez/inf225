@@ -1,7 +1,8 @@
 const express =require("express");
+var jwt = require('jsonwebtoken');
 const {Usuario}=require("../models");
 const bcrypt = require("bcrypt");
-const jwt =require("jsonwebtoken");
+const secrets = require("../config/secrets.js");
 
 const router = express.Router();
 router.get("/register", async (req, res) =>{
@@ -62,7 +63,7 @@ router.post("/login", async (req, res) => {
         if(!user) return res.status(400).json({ error: "Email incorrecto" });
         const validPass = await bcrypt.compare(req.body.password, user.password);
         if (!validPass) return res.status(400).json({ error: "Contraseña incorrecta" });
-        const token =jwt.sign({rut:user.rut},process.env.SECRET_TOKEN)
+        const token =jwt.sign({rut:user.rut},process.env.REACT_APP_JWT_SECRET);
         return res.header("auth-token",token).json({token:token ,message: "Login exitoso",user:user});
     } catch (error){
         return res.status(500).send(error); 

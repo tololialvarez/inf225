@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { formateaRut, checkRut } from "../utils/format";
+import PropTypes from 'prop-types';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-function Register(props) {
+function Register({handleLinkClick}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rut, setRut] = useState("");
@@ -13,37 +15,46 @@ function Register(props) {
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  const handleRut = (e) => setRut(e.target.value);
+  
   const handleNombre = (e) => setNombre(e.target.value);
   const handleEsVendedor = (e) => setEsVendedor(e.target.checked);
 
+  const handleRut = (e) => {
+    const rut = formateaRut(e.target.value);
+    setRut(rut);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .post(`${backendUrl}/auth/register`, {
-        email: email,
-        password: password,
-        rut: rut, // Aquí debes unir el número de RUT y el dígito verificador antes de enviarlo al servidor
-        esVendedor: esVendedor,
-        nombre: nombre,
-      })
-      .then((response) => {
-        setEstado(response.data.message);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-            // El servidor respondió con un código de error
-            setEstado(`Error: ${error.response.data.error}`);
-        } else if (error.request) {
-            // La solicitud fue realizada, pero no se recibió respuesta
-            setEstado("No se recibió respuesta del servidor");
-        } else {
-            // Se produjo un error antes de realizar la solicitud
-            setEstado("Error desconocido al realizar la solicitud");
-        }
-      });
+    if (!checkRut(rut)){
+      setEstado("Rut Inválido");
+    } else {
+      const [rutForm, dv] = rut.replaceAll('.', '').split('-');
+      axios
+        .post(`${backendUrl}/auth/register`, {
+          email: email,
+          password: password,
+          rut: rutForm, // Aquí debes unir el número de RUT y el dígito verificador antes de enviarlo al servidor
+          esVendedor: esVendedor,
+          nombre: nombre,
+        })
+        .then((response) => {
+          setEstado(response.data.message);
+          handleLinkClick('login');
+        })
+        .catch((error) => {
+          if (error.response) {
+              // El servidor respondió con un código de error
+              setEstado(`Error: ${error.response.data.error}`);
+          } else if (error.request) {
+              // La solicitud fue realizada, pero no se recibió respuesta
+              setEstado("No se recibió respuesta del servidor");
+          } else {
+              // Se produjo un error antes de realizar la solicitud
+              setEstado("Error desconocido al realizar la solicitud");
+          }
+        });
+    }
   };
 
   return (
@@ -60,9 +71,9 @@ function Register(props) {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formRut">
-        <Form.Label>Ingrese su RUT (sin dígito verificador)</Form.Label>
+        <Form.Label>Ingrese su RUT</Form.Label>
         <InputGroup className="mb-3">
-          <Form.Control onChange={handleRut} type="text" placeholder="RUT" />
+          <Form.Control onChange={handleRut} type="text" placeholder="RUT" value={rut} />
         </InputGroup>
       </Form.Group>
 
@@ -92,5 +103,13 @@ function Register(props) {
     </Form>
   );
 }
+
+Register.propTypes = {
+  handleLinkClick: PropTypes.func
+};
+
+Register.defaultProps = {
+  handleLinkClick: () => {}
+};
 
 export default Register;

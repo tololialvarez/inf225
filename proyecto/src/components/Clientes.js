@@ -42,8 +42,7 @@ function Clientes() {
         setFilteredClients(ListofClients); // Reset to show all clients
     };
 
-    return isLogged ? (
-        esVendedor ? (
+    return isLogged && esVendedor ? (
         <div className="App">
             <div className="background-pink"> {/* Aplicamos el fondo rosa pastel aquí */}
             <SearchBar onSearch={handleSearch} onClear={handleClear} />
@@ -73,12 +72,7 @@ function Clientes() {
             <Alert variant="danger" >
           Usuario no autorizado
         </Alert>
-        )
-    ) : (
-        <Alert variant="danger" >
-          Debe iniciar sesión!
-        </Alert>
-    );
+        );
 }
 
 export default Clientes;

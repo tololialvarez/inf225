@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
+}

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { formateaRut, checkRut, formatAmount } from '../utils/format';
+import { Alert } from "react-bootstrap";
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const QuotationsPage = () => {
   const [rut, setRut] = useState('');
@@ -9,21 +13,33 @@ const QuotationsPage = () => {
   const [resultado, setResultado] = useState(null);
   const [historial, setHistorial] = useState([]);
   const [historialRut, setHistorialRut] = useState('');
+  const [errorValidacion, setErrorValidacion] = useState('');
+  const [errorValidacionHistorial, setErrorValidacionHistorial] = useState('');
+
+  const fetchUF = async () => {
+    try {
+      const APIkey = "b022097785bd0cdef5584ef20e77d252876995ea";
+      const response = await axios.get(`https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=${APIkey}&formato=json`);
+      const data = response.data;
+      const ufValue = parseFloat(data.UFs[0].Valor.replace('.', '').replace(',', '.'));
+      setValorUF(ufValue);
+    } catch (error) {
+      console.error("Error fetching UF value:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUF = async () => {
-      try {
-        const APIkey = "b022097785bd0cdef5584ef20e77d252876995ea";
-        const response = await axios.get(`https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=${APIkey}&formato=json`);
-        const data = response.data;
-        const ufValue = parseFloat(data.UFs[0].Valor.replace('.', '').replace(',', '.'));
-        setValorUF(ufValue);
-      } catch (error) {
-        console.error("Error fetching UF value:", error);
-      }
-    };
     fetchUF();
   }, []);
+
+  const handleRut = (value, historial) => {
+    const rut = formateaRut(value);
+    if (historial) {
+      setHistorialRut(rut);
+    } else {
+      setRut(rut);
+    }
+  }
 
   const calcularPagoMensual = (montoUF, tasaAnual, meses) => {
     const tasaMensual = tasaAnual / 12 / 100;
@@ -31,46 +47,63 @@ const QuotationsPage = () => {
     return pagoMensual;
   };
 
-  const handleCalcular = async () => {
-    const tasaAnual = 2; // Fixed annual interest rate of 2%
-    const pagoMensualUF = calcularPagoMensual(parseFloat(montoUF), tasaAnual, parseInt(meses));
-    const pagoMensualCLP = pagoMensualUF * valorUF;
-    setResultado(pagoMensualCLP.toFixed(2));
+  const handleCalcular =  () => {
+    if (checkRut(rut)) {
+      setErrorValidacion("");
+      const [rutForm, dv] = rut.replaceAll('.', '').split('-');
+      const tasaAnual = 2; // Fixed annual interest rate of 2%
+      const pagoMensualUF = calcularPagoMensual(parseFloat(montoUF), tasaAnual, parseInt(meses));
+      const pagoMensualCLP = pagoMensualUF * valorUF;
+      setResultado(pagoMensualCLP.toFixed(2));
 
-    // Save the simulation to the database
-    try {
-      console.log('Sending request to save simulation...');
-      const response = await axios.post('/api/simulations/save', {
-        rut,
-        monto_uf: parseFloat(montoUF),
-        meses: parseInt(meses),
-        resultado: parseFloat(pagoMensualCLP)
-      });
-      console.log('Simulation saved successfully:', response.data);
-    } catch (error) {
-      console.error("Error saving simulation:", error);
+      try {
+        axios.post(`${backendUrl}/simulations/save`, {
+          rut: rutForm,
+          monto_uf: parseFloat(montoUF),
+          meses: parseInt(meses),
+          resultado: parseFloat(pagoMensualCLP),
+        }).catch(() => {
+          setErrorValidacion("Error al guardar simulación");
+        });
+        
+      } catch (error) {
+        setErrorValidacion("Error al calcular");
+      }
+    } else {
+      setErrorValidacion("Rut Inválido");
     }
   };
 
-  const fetchHistorial = async () => {
-    try {
-      console.log(`Fetching history for RUT: ${historialRut}`);
-      const response = await axios.get(`/api/simulations/${historialRut}`);
-      setHistorial(response.data);
-    } catch (error) {
-      console.error("Error fetching history:", error);
+  const fetchHistorial = () => {
+    if (checkRut(historialRut)) {
+      setErrorValidacionHistorial("");
+      const [rutForm, dv] = historialRut.replaceAll('.', '').split('-');
+      try {
+        axios.get(`${backendUrl}/simulations/${rutForm}`).then((response) => {
+          setHistorial(response.data);
+        }).catch(() => setErrorValidacionHistorial("Error al buscar información"));
+      } catch (error) {
+        setErrorValidacionHistorial("Error al buscar información");
+      }
+    } else {
+      setErrorValidacionHistorial("Rut Inválido");
     }
   };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Simulación</h1>
+      {errorValidacion !== "" && (
+        <Alert variant={errorValidacion === "Registro exitoso" ? "success" : "danger"}>
+          {errorValidacion}
+        </Alert>
+      )}
       <div style={styles.formGroup}>
         <label style={styles.label}>RUT: </label>
         <input 
-          type="number" 
+          type="text" 
           value={rut} 
-          onChange={(e) => setRut(e.target.value)} 
+          onChange={(e) => handleRut(e.target.value, false)} 
           style={styles.input}
         />
       </div>
@@ -96,18 +129,24 @@ const QuotationsPage = () => {
       {resultado && (
         <div style={styles.result}>
           <h3 style={styles.resultHeader}>Resultado de la simulación:</h3>
-          <p style={styles.resultText}>Pago mensual en pesos chilenos: {resultado}</p>
+          <p style={styles.resultText}>Pago mensual en pesos chilenos: {formatAmount(resultado)}</p>
         </div>
       )}
       {!valorUF && <p style={styles.loadingText}>Loading UF value...</p>}
-
+      <br />
+      <br />
       <h2 style={styles.header}>Historial de Cotizaciones</h2>
+      {errorValidacionHistorial !== "" && (
+        <Alert variant={errorValidacionHistorial === "Registro exitoso" ? "success" : "danger"}>
+          {errorValidacionHistorial}
+        </Alert>
+      )}
       <div style={styles.formGroup}>
         <label style={styles.label}>RUT para historial: </label>
         <input 
-          type="number" 
+          type="text" 
           value={historialRut} 
-          onChange={(e) => setHistorialRut(e.target.value)} 
+          onChange={(e) => handleRut(e.target.value, true)} 
           style={styles.input}
         />
         <button onClick={fetchHistorial} disabled={!historialRut} style={styles.button}>Buscar Historial</button>
@@ -120,7 +159,7 @@ const QuotationsPage = () => {
                 <p style={styles.listText}>Fecha: {new Date(simulacion.fecha).toLocaleDateString()}</p>
                 <p style={styles.listText}>Monto UF: {simulacion.monto_uf}</p>
                 <p style={styles.listText}>Meses: {simulacion.meses}</p>
-                <p style={styles.listText}>Resultado: {simulacion.resultado} CLP</p>
+                <p style={styles.listText}>Resultado: {formatAmount(simulacion.resultado)} CLP</p>
               </li>
             ))}
           </ul>

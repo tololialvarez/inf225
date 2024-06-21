@@ -15,11 +15,20 @@ import {useSelector, useDispatch} from "react-redux";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(getInitialPage());
+  const [dataUser, setDataUser] = useState({});
+  const isLogged = useSelector((store) => store.authReducer.isLogged);
+
   useEffect(() => {
     window.onpopstate = () => {
       setCurrentPage(getInitialPage());
     };
   }, []);
+
+  useEffect(() => {
+    const user=JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    setDataUser(user || {});
+  }, [isLogged]);
 
   function getInitialPage() {
     const path = window.location.pathname;
@@ -33,10 +42,11 @@ const App = () => {
 
     return 'login';
   }
-  const isLogged = useSelector((store) => store.authReducer.isLogged);
   const dispatch = useDispatch();
+
   const handleLogout = (e)=>{
     dispatch(logout()); localStorage.clear();
+    handleLinkClick('login');
   }
   const handleLinkClick = (page) => {
     setCurrentPage(page);
@@ -46,9 +56,9 @@ const App = () => {
   const renderPage = () => {
     switch (currentPage) {
       case 'register':
-        return <Register />;
+        return <Register handleLinkClick={handleLinkClick} />;
       case 'login':
-        return <Login />;
+        return <Login handleLinkClick={handleLinkClick} />;
       case 'inicio':
         return <Inicio />;
       case 'clientes':
@@ -56,7 +66,7 @@ const App = () => {
       case 'valoruf':
         return <ValorUF />;
       case 'solicitudes':
-        return <Solicitudes />;
+        return <Solicitudes handleLinkClick={handleLinkClick} />;
       case 'prestamos':
         return <Prestamos />;
       case 'quotations':
@@ -76,28 +86,19 @@ const App = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link onClick={() => handleLinkClick('inicio')}>Inicio</Nav.Link>
-              {isLogged && <Nav.Link onClick={() => handleLinkClick('clientes')}>Clientes</Nav.Link>}
-              {isLogged && <Nav.Link onClick={() => handleLinkClick('prestamos')}>Ver Solicitudes</Nav.Link>}
+              {isLogged && dataUser.esVendedor && <Nav.Link onClick={() => handleLinkClick('clientes')}>Clientes</Nav.Link>}
+              {isLogged && dataUser.esVendedor && <Nav.Link onClick={() => handleLinkClick('prestamos')}>Ver Solicitudes</Nav.Link>}
               <Nav.Link onClick={() => handleLinkClick('valoruf')}>Valor UF</Nav.Link>
               <Nav.Link onClick={() => handleLinkClick('quotations')}>Simulación</Nav.Link>
             </Nav>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => handleLinkClick('login')}>Login</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleLinkClick('register')}>Register</NavDropdown.Item>
-                {isLogged && <NavDropdown.Item onClick={() => handleLinkClick('solicitudes')}>Generar Solicitudes</NavDropdown.Item>}
-                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+            <NavDropdown title="Menú" id="basic-nav-dropdown">
+                {!isLogged &&<NavDropdown.Item onClick={() => handleLinkClick('login')}>Login</NavDropdown.Item>}
+                {!isLogged &&<NavDropdown.Item onClick={() => handleLinkClick('register')}>Register</NavDropdown.Item>}
+                {isLogged && !dataUser.esVendedor && <NavDropdown.Item onClick={() => handleLinkClick('solicitudes')}>Generar Solicitudes</NavDropdown.Item>}
+                {isLogged && <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>}
             </NavDropdown>
           </Navbar.Collapse>
-          <Form inline>
-            <InputGroup>
-              <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-              <Form.Control
-                placeholder="Username"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-          </Form>
+          <p className='username-logged'>{isLogged&& dataUser.nombre}</p>
         </Container>
       </Navbar>
 

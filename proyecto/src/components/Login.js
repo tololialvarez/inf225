@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Form, Button, Alert }from 'react-bootstrap';
 import { UseSelector, useDispatch } from "react-redux";
 import {login, logout} from "../redux/actions/authActions"
+import PropTypes from 'prop-types';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-function Login() {
+function Login({handleLinkClick}) {
     const [email, setEmail] = useState("");
     const [password, setPass]= useState("");
     const [estado, setEstado]= useState("");
@@ -22,17 +23,18 @@ function Login() {
    
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (email && password){
         axios
           .post(`${backendUrl}/auth/login`, {
             email: email,
             password: password,
           })
           .then((response) => {
-            localStorage.setItem("authToken", response.headers.get('auth-token'));
+            localStorage.setItem("authToken", response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             dispatch(login());
             setEstado(response.data.message);
-            console.log(response.data);
+            handleLinkClick('inicio');
           })
           .catch((error) => {
             if (error.response) {
@@ -46,6 +48,9 @@ function Login() {
               setEstado("Error desconocido al realizar la solicitud");
           }
           });
+        } else {
+          setEstado("Debe ingresar email y/o password");
+        }
       };
   return (
     <Form>
@@ -55,10 +60,11 @@ function Login() {
         </Alert>
       )}
       <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control onChange={handleEmail} type="email" placeholder="Enter email" />                <Form.Text className="text-muted">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control onChange={handleEmail} type="email" placeholder="Enter email" />                
+          <Form.Text className="text-muted">
             We'll never share your email with anyone else.
-        </Form.Text>
+          </Form.Text>
         </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -72,5 +78,12 @@ function Login() {
     </Form>
   );
 }
+Login.propTypes = {
+  handleLinkClick: PropTypes.func
+};
+
+Login.defaultProps = {
+  handleLinkClick: () => {}
+};
 
 export default Login;

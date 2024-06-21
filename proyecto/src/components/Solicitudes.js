@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Form, Button, Alert, InputGroup }from 'react-bootstrap';
+import {Form, Button, Alert }from 'react-bootstrap';
+import PropTypes from 'prop-types';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function formatDate(dateString) {
@@ -18,7 +19,7 @@ function showDecimal(number){
   return result;
 }
 
-function Solicitudes(props) {
+function Solicitudes({handleLinkClick}) {
   const [tasa, setTasa] = useState("");
   const [valor_credito, setvalor_credito] = useState("");
   const [plazo, setPlazo] = useState("");
@@ -31,17 +32,24 @@ function Solicitudes(props) {
   const handleValorCred = (e) => setvalor_credito(e.target.value);
   const handleRut = (e) => setRut(e.target.value);
   const handlePlazo = (e) => setPlazo(e.target.value);
-  
+
+  useEffect(()=> {
+    const user=JSON.parse(localStorage.getItem('user'));
+    if (!user){
+      handleLinkClick('login')
+    }
+  },[]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-
+    const user=JSON.parse(localStorage.getItem('user'));
+    console.log(user);
     axios
       .post(`${backendUrl}/solicitudes/generar`,{
         tasa:tasa,
         valor_credito:valor_credito,
         plazo:plazo,
-        rut_cliente:rut,
+        rut_cliente:user.rut,
       })
       .then((response) => {
         setEstado("OK");
@@ -93,13 +101,6 @@ function Solicitudes(props) {
         <Form.Control onChange={handleTasa} type="text" placeholder="Tasa" />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formRut">
-        <Form.Label>Ingrese su RUT (sin dígito verificador)</Form.Label>
-        <InputGroup className="mb-3">
-          <Form.Control onChange={handleRut} type="text" placeholder="RUT" />
-        </InputGroup>
-      </Form.Group>
-
       <Form.Group className="mb-3" controlId="formplazo">
         <Form.Label>Ingrese plazo</Form.Label>
         <Form.Control onChange={handlePlazo} type="text" placeholder="Plazo" />
@@ -116,5 +117,13 @@ function Solicitudes(props) {
     </Form>
   );
 }
+
+Solicitudes.propTypes = {
+  handleLinkClick: PropTypes.func
+};
+
+Solicitudes.defaultProps = {
+  handleLinkClick: () => {}
+};
 
 export default Solicitudes;
