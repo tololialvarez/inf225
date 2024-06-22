@@ -2,7 +2,6 @@ const express =require("express");
 var jwt = require('jsonwebtoken');
 const {Usuario}=require("../models");
 const bcrypt = require("bcrypt");
-const secrets = require("../config/secrets.js");
 
 const router = express.Router();
 router.get("/register", async (req, res) =>{
