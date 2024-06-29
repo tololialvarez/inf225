@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { formateaRut, checkRut } from "../utils/format";
 import PropTypes from 'prop-types';
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -11,13 +11,32 @@ function Register({handleLinkClick}) {
   const [rut, setRut] = useState("");
   const [nombre, setNombre] = useState("");
   const [esVendedor, setEsVendedor] = useState(false);
+  const [esAnalista, setEsAnalista] = useState(false);
   const [estado, setEstado] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  
   const handleNombre = (e) => setNombre(e.target.value);
-  const handleEsVendedor = (e) => setEsVendedor(e.target.checked);
+
+  const handleTipoUsuario = (e) => {
+    const value = e.target.value;
+    setSelectedOption(value);
+    setEsVendedor(false);
+    setEsAnalista(false);
+    switch (value) {
+      case 'vendedor':
+        setEsVendedor(true);
+        break;
+      case 'analista':
+          setEsAnalista(true);
+          break;
+      default:
+        break;
+
+    }
+    
+  };
 
   const handleRut = (e) => {
     const rut = formateaRut(e.target.value);
@@ -36,6 +55,7 @@ function Register({handleLinkClick}) {
           password: password,
           rut: rutForm, // Aquí debes unir el número de RUT y el dígito verificador antes de enviarlo al servidor
           esVendedor: esVendedor,
+          esAnalista: esAnalista,
           nombre: nombre,
         })
         .then((response) => {
@@ -67,38 +87,35 @@ function Register({handleLinkClick}) {
 
       <Form.Group className="mb-3" controlId="formNombre">
         <Form.Label>Ingrese su nombre</Form.Label>
-        <Form.Control onChange={handleNombre} type="text" placeholder="Nombre" />
+        <Form.Control onChange={handleNombre} type="text" placeholder="Introduzca su nombre" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formRut">
         <Form.Label>Ingrese su RUT</Form.Label>
         <InputGroup className="mb-3">
-          <Form.Control onChange={handleRut} type="text" placeholder="RUT" value={rut} />
+          <Form.Control onChange={handleRut} type="text" placeholder="Introduzca su RUT" value={rut} />
         </InputGroup>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control onChange={handleEmail} type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+        <Form.Label>Correo electrónico</Form.Label>
+        <Form.Control onChange={handleEmail} type="email" placeholder="Introduzca su correo electronico" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control onChange={handlePassword} type="password" placeholder="Password" />
+        <Form.Label>Contraseña</Form.Label>
+        <Form.Control onChange={handlePassword} type="password" placeholder="Introduzca su contraseña" />
       </Form.Group>
 
-      <Form.Group controlId="formEsVendedor">
-        <Form.Check
-          type="switch"
-          label="Es vendedor?"
-          checked={esVendedor}
-          onChange={handleEsVendedor}
-        />
-      </Form.Group>
-
+    
+      <Form.Select onChange={handleTipoUsuario} value={selectedOption}>
+      <option value="">Seleccione tipo de usuario</option>
+      <option value="cliente">Cliente</option>
+      <option value="vendedor">Vendedor</option>
+      <option value="analista">Analista</option>
+    </Form.Select>
       <Button onClick={handleSubmit} variant="primary" type="submit">
-        Submit
+        Registro
       </Button>
     </Form>
   );

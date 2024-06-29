@@ -97,22 +97,22 @@ function Solicitudes({handleLinkClick}) {
       )}
 
       <Form.Group className="mb-3" controlId="formNombre">
-        <Form.Label>Ingrese la tasa mensual</Form.Label>
-        <Form.Control onChange={handleTasa} type="text" placeholder="Tasa" />
+        <Form.Label>Tasa mensual</Form.Label>
+        <Form.Control onChange={handleTasa} type="text" placeholder="Ingrese la tasa" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formplazo">
-        <Form.Label>Ingrese plazo</Form.Label>
-        <Form.Control onChange={handlePlazo} type="text" placeholder="Plazo" />
+        <Form.Label>Plazo</Form.Label>
+        <Form.Control onChange={handlePlazo} type="text" placeholder="Ingrese plazo" />
         </Form.Group>
 
       <Form.Group className="mb-3" controlId="formd">
-        <Form.Label>Ingrese el valor del crédito</Form.Label>
-        <Form.Control onChange={handleValorCred} type="text" placeholder="Valor crédito" />
+        <Form.Label>Valor crédito</Form.Label>
+        <Form.Control onChange={handleValorCred} type="text" placeholder="Ingrese el valor del crédito" />
       </Form.Group>
 
       <Button onClick={handleSubmit} variant="primary" type="submit">
-        Submit
+        Enviar Solicitud
       </Button>
     </Form>
   );

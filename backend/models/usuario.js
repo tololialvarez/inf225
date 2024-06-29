@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    esAnalista: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     password: {
       allowNull: false,
       type: DataTypes.STRING

@@ -49,6 +49,9 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint('prestamos', 'prestamos_rut_cliente_fkey');
+    await queryInterface.removeConstraint('prestamos', 'prestamos_rut_fkey');
     await queryInterface.dropTable('prestamos');
+
   }
 };

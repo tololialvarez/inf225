@@ -60,20 +60,17 @@ function Login({handleLinkClick}) {
         </Alert>
       )}
       <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control onChange={handleEmail} type="email" placeholder="Enter email" />                
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
+          <Form.Label>Correo electrónico</Form.Label>
+          <Form.Control onChange={handleEmail} type="email" placeholder="Introduzca su correo electrónico" />                
         </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control onChange={handlePass} type="password" placeholder="Password" />
+        <Form.Label>Contraseña</Form.Label>
+        <Form.Control onChange={handlePass} type="password" placeholder="Introduzca su contraseña" />
       </Form.Group>
       
       <Button onClick={handleSubmit} variant="primary" type="submit">
-            Submit
+            Iniciar Sesión
           </Button>
     </Form>
   );

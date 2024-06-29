@@ -5,6 +5,7 @@ import Clientes from './components/Clientes';
 import Login from './components/Login';
 import Register from './components/Register';
 import Solicitudes from './components/Solicitudes';
+import Informes from './components/Informes';
 import Prestamos from './components/Prestamos';
 import QuotationsPage from './components/QuotationsPage';
 import { logout} from "./redux/actions/authActions"
@@ -37,6 +38,7 @@ const App = () => {
     if (path === '/clientes') return 'clientes';
     if (path === '/valoruf') return 'valoruf';
     if (path === '/solicitudes') return 'solicitudes';
+    if (path === '/informes') return 'informes';
     if (path === '/prestamos') return 'prestamos';
     if (path.includes('/quotations')) return 'quotations'; 
 
@@ -69,6 +71,8 @@ const App = () => {
         return <Solicitudes handleLinkClick={handleLinkClick} />;
       case 'prestamos':
         return <Prestamos />;
+      case 'informes':
+        return <Informes handleLinkClick={handleLinkClick} />;
       case 'quotations':
         const customerId = window.location.pathname.split('/')[2];  // assuming URL like /quotations/123
         return <QuotationsPage customerId={customerId} />;
@@ -94,7 +98,8 @@ const App = () => {
             <NavDropdown title="Menú" id="basic-nav-dropdown">
                 {!isLogged &&<NavDropdown.Item onClick={() => handleLinkClick('login')}>Login</NavDropdown.Item>}
                 {!isLogged &&<NavDropdown.Item onClick={() => handleLinkClick('register')}>Register</NavDropdown.Item>}
-                {isLogged && !dataUser.esVendedor && <NavDropdown.Item onClick={() => handleLinkClick('solicitudes')}>Generar Solicitudes</NavDropdown.Item>}
+                {isLogged && !dataUser.esVendedor && !dataUser.esAnalista && <NavDropdown.Item onClick={() => handleLinkClick('solicitudes')}>Generar Solicitudes</NavDropdown.Item>}
+                {isLogged && dataUser.esAnalista && <NavDropdown.Item onClick={() => handleLinkClick('informes')}>Generar informes</NavDropdown.Item>}
                 {isLogged && <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>}
             </NavDropdown>
           </Navbar.Collapse>
