@@ -110,7 +110,7 @@ router.post("/generar", async (req, res) => {
         const cuota_uf = calcularCuotaUF(tasa, plazo, valor_credito);
         const total = calcularTotal(cuota_uf, plazo);
         const rut = parseInt(req.body.rut_cliente);
-        params = {
+        const params = {
             tasa:tasa,
             valor_uf:valor_uf, // Calculado previamente
             plazo:plazo,
