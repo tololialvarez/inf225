@@ -28,7 +28,7 @@ function ValorUF(props){
                 <Toast.Header>
                     <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
                     <strong className="me-auto">ValorUF</strong>
-                    <small>{valores[0] && valores[0].Fecha}</small>
+                    <small>{valores[0]?.Fecha}</small>
                 </Toast.Header>
                 <Toast.Body>{valores[0] && <div>{valores[0].Valor}</div>}
                 </Toast.Body>
